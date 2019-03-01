@@ -23,8 +23,11 @@ class App extends Component {
 
     axios
       .get("http://localhost:3333/smurfs")
-      .then(response => console.log("Get Response:", response))
-      .catch(error => console.log("Get had an error"));
+      .then(response => {
+        console.log("Get Response:", response);
+        this.setState({ smurfs: response.data });
+      })
+      .catch(error => alert("Get had an error"));
   }
   render() {
     return (
