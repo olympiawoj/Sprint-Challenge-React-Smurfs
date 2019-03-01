@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Route, Link, NavLink } from "react-router-dom";
+
 import axios from "axios";
 
 import "./App.css";
@@ -16,11 +18,11 @@ class App extends Component {
   // Notice what your map function is looping over and returning inside of Smurfs.
   // You'll need to make sure you have the right properties on state and pass them down to props.
 
+  //`http://localhost:3333` is the address to the server doorstop
+  //  /smurfs is the "endpoint"
+
   componentDidMount() {
     console.log("CDM now running");
-    //`http://localhost:3333` is the address to the server doorstop
-    //  /smurfs is the "endpoint"
-
     axios
       .get("http://localhost:3333/smurfs")
       .then(response => {
@@ -43,8 +45,27 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SmurfForm postSmurfToServer={this.postSmurfToServer} />
-        <Smurfs smurfs={this.state.smurfs} />
+        <nav>
+          <NavLink exact to="/" activeClassName="activeNavButton">
+            Home
+          </NavLink>
+          <NavLink to="/smurf-form" activeClassName="activeNavButton">
+            Add
+          </NavLink>
+        </nav>
+        {/* <SmurfForm postSmurfToServer={this.postSmurfToServer} /> */}
+        {/* <Smurfs smurfs={this.state.smurfs} /> */}
+        <Route
+          exact
+          path="/"
+          render={props => <Smurfs smurfs={this.state.smurfs} />}
+        />
+        <Route
+          path="/smurf-form"
+          render={props => (
+            <SmurfForm postSmurfToServer={this.postSmurfToServer} />
+          )}
+        />
       </div>
     );
   }
