@@ -29,10 +29,21 @@ class App extends Component {
       })
       .catch(error => alert("Get had an error"));
   }
+
+  postSmurfToServer = smurf => {
+    axios
+      .post("http://localhost:3333/smurfs", smurf)
+      .then(response => {
+        console.log("Post Response:", response);
+        this.setState({ smurfs: response.data });
+      })
+      .catch(error => alert("Post had an error"));
+  };
+
   render() {
     return (
       <div className="App">
-        <SmurfForm />
+        <SmurfForm postSmurfToServer={this.postSmurfToServer} />
         <Smurfs smurfs={this.state.smurfs} />
       </div>
     );
